@@ -1,4 +1,4 @@
-# 🐋 Manorch - Trading Signals App
+# 🐋 Manorch - Trading Signals App Demo
 
 A sleek, modern trading signals app that combines social features with trading insights. Follow the smart money and get real-time signals from verified whales.
 
