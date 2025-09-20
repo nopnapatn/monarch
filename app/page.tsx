@@ -1,35 +1,36 @@
-import App from '@/components/pages/app'
-import { APP_URL } from '@/lib/constants'
-import type { Metadata } from 'next'
+import { APP_URL } from "@/lib/constants"
+import type { Metadata } from "next"
+import { WhaleCastApp } from "../components/WhaleCast/WhaleCastApp"
 
 const frame = {
-  version: 'next',
+  version: "next",
   imageUrl: `${APP_URL}/images/feed.png`,
   button: {
-    title: 'Launch Template',
+    title: "Launch WhaleCast",
     action: {
-      type: 'launch_frame',
-      name: 'Monad Farcaster MiniApp Template',
+      type: "launch_frame",
+      name: "WhaleCast - Trading Signals",
       url: APP_URL,
       splashImageUrl: `${APP_URL}/images/splash.png`,
-      splashBackgroundColor: '#f7f7f7',
-    },
-  },
+      splashBackgroundColor: "#0B132B"
+    }
+  }
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Monad Farcaster MiniApp Template',
+    title: "WhaleCast - Trading Signals",
     openGraph: {
-      title: 'Monad Farcaster MiniApp Template',
-      description: 'A template for building mini-apps on Farcaster and Monad',
+      title: "WhaleCast - Trading Signals",
+      description:
+        "Follow the smart money. Get real-time trading signals from verified whales."
     },
     other: {
-      'fc:frame': JSON.stringify(frame),
-    },
+      "fc:frame": JSON.stringify(frame)
+    }
   }
 }
 
 export default function Home() {
-  return <App />
+  return <WhaleCastApp />
 }

@@ -1,294 +1,170 @@
-# Monad Farcaster MiniApp Template
+# 🐋 Manorch - Trading Signals App
 
-The template demonstrates all Mini App capabilities and lets you easily modify it, so you can build Mini Apps.
+A sleek, modern trading signals app that combines social features with trading insights. Follow the smart money and get real-time signals from verified whales.
 
-## Cloning the Template
+## Features
 
-You can the following command to clone the Mini App template to your local machine:
+### 📱 Core Screens
 
-```
-git clone https://github.com/monad-developers/monad-miniapp-template.git
-```
+- **Feed Page**: A list of Signal Cards showing recent trades from verified traders
+- **Signal Details Page**: Detailed view with actor profile and trade information
+- **Settings Page**: Customizable filters and notification preferences
+- **Copy Trade Modal**: One-click trade copying with slippage controls
+- **Share Alpha Card**: Social sharing functionality for Farcaster
 
-### Install the dependencies
+### 🎨 Design Features
 
-```
-yarn
-```
+- **Dark Theme**: Professional dark background (#0B132B) with lime accents (#C7F284)
+- **Mobile-First**: Responsive design that scales from mobile to web
+- **Crypto-Native**: Emoji badges (🐋 ✅ ⚡ 🔕) for a playful but clean feel
+- **Modern UI**: Rounded cards with 16px radius and soft shadows
+- **Typography**: Inter font family for clean, readable text
 
-### Copy `.env.example` over to `.env.local`
+### 🔧 Technical Features
 
-```bash
-cp .env.example .env.local
-```
+- **Real-time Data**: Integration with Redis for user data and trade signals
+- **TypeScript**: Full type safety with proper interfaces
+- **Tailwind CSS**: Utility-first styling with custom theme
+- **Farcaster Integration**: Built as a Farcaster miniapp
+- **Responsive Design**: Works on all screen sizes
 
-### Run the template
+## Components
 
-```bash
-yarn run dev
-```
+### SignalCard
 
-### View the App in Warpcast Embed tool
+Displays trade information with:
 
-Warpcast has a neat [Embed tool](https://warpcast.com/~/developers/mini-apps/embed) that you can use to inspect the Mini App before you publish it.
+- User avatar and verification badges
+- Trade summary (token swap details)
+- Performance metrics (PnL, winrate, followers)
+- Action buttons (Copy Trade, Details)
 
-Unfortunately, the embed tool can only work with remote URL. Inputting a localhost URL does not work.
+### UserProfile
 
-As a workaround, you may make the local app accessible remotely using a tool like `cloudflared` or `ngrok`. In this guide we will use `cloudflared`.
+Actor profile header showing:
 
-#### Install Cloudflared
+- Whale badges and verification status
+- Performance statistics
+- Follow/unfollow controls
+- Share and mute options
 
-```bash
-brew install cloudflared
-```
+### CopyTradeModal
 
-For more installation options see the [official docs](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/).
+Trade execution interface with:
 
-#### Expose localhost
+- Token pair visualization
+- Amount input with live calculations
+- Slippage tolerance settings
+- Confirmation flow
 
-Run the following command in your terminal:
+### SettingsPage
 
-```bash
-cloudflared tunnel --url http://localhost:3000
-```
+User preferences including:
 
-Be sure to specify the correct port for your local server.
+- Filter controls (minimum notional, verified only, whales only)
+- Notification toggles (in-app, Discord, Telegram)
+- Follow management
+- Save/load preferences
 
-#### Set `NEXT_PUBLIC_URL` environment variable in `.env.local` file
+### ShareAlphaCard
 
-```bash
-NEXT_PUBLIC_URL=<url-from-cloudflared-or-ngrok>
-```
+Social sharing with:
 
-#### Use the provided url
+- Preview card generation
+- Farcaster integration
+- Customizable sharing options
 
-`cloudflared` will generate a random subdomain and print it in the terminal for you to use. Any traffic to this URL will get sent to your local server.
+## Getting Started
 
-Enter the provided URL in the [Warpcast Embed tool](https://warpcast.com/~/developers/mini-apps/embed).
+1. **Install Dependencies**
 
-![embed-tool](https://docs.monad.xyz/img/guides/farcaster-miniapp/1.png)
+   ```bash
+   npm install
+   ```
 
-Let's investigate the various components of the template.
+2. **Set Environment Variables**
 
-## Customizing the Mini App Embed
+   ```bash
+   UPSTASH_REDIS_REST_URL=your_redis_url
+   UPSTASH_REDIS_REST_TOKEN=your_redis_token
+   ```
 
-Mini App Embed is how the Mini App shows up in the feed or in a chat conversation when the URL of the app is shared.
+3. **Run Development Server**
 
-The Mini App Embed looks like this:
+   ```bash
+   npm run dev
+   ```
 
-![embed-preview](https://docs.monad.xyz/img/guides/farcaster-miniapp/2.png)
+4. **Access the App**
+   Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can customize this by editing the file `app/page.tsx`:
+## Data Structure
 
-```js
-...
+### User Interface
 
-const appUrl = env.NEXT_PUBLIC_URL;
-
-const frame = {
-  version: "next",
-  imageUrl: `${appUrl}/images/feed.png`, // Embed image URL (3:2 image ratio)
-  button: {
-    title: "Template", // Text on the embed button
-    action: {
-      type: "launch_frame",
-      name: "Monad Farcaster MiniApp Template",
-      url: appUrl, // URL that is opened when the embed button is tapped or clicked.
-      splashImageUrl: `${appUrl}/images/splash.png`,
-      splashBackgroundColor: "#f7f7f7",
-    },
-  },
-};
-
-...
-```
-
-You can either edit the URLs for the images or replace the images in `public/images` folder in the template.
-
-Once you are happy with the changes, click `Refetch` in the Embed tool to get the latest configuration.
-
-> [!NOTE]
-> If you are developing locally, ensure that your Next.js app is running locally and the cloudflare tunnel is open. 
-
-
-## Customizing the Splash Screen
-
-Upon opening the Mini App, the first thing the user will see is the Splash screen:
-
-![splash-screen](https://docs.monad.xyz/img/guides/farcaster-miniapp/3.png)
-
-You can edit the `app/page.tsx` file to customize the Splash screen.
-
-```js
-...
-
-const appUrl = env.NEXT_PUBLIC_URL;
-
-const frame = {
-  version: "next",
-  imageUrl: `${appUrl}/images/feed.png`,
-  button: {
-    title: "Launch Template",
-    action: {
-      type: "launch_frame",
-      name: "Monad Farcaster MiniApp Template",
-      url: appUrl,
-      splashImageUrl: `${appUrl}/images/splash.png`, // App icon in the splash screen (200px * 200px)
-      splashBackgroundColor: "#f7f7f7", // Splash screen background color
-    },
-  },
-};
-
-...
-```
-
-For `splashImageUrl`, you can either change the URL or replace the image in `public/images` folder in the template.
-
-## Modifying the Mini App
-
-Upon opening the template Mini App, you should see a screen like this:
-
-<img width="1512" alt="4" src="https://github.com/user-attachments/assets/259a3dd2-17ee-4afd-8942-ad83a92f6335" />
-
-
-The code for this screen is in the `components/pages/app.tsx` file:
-
-```tsx
-export default function Home() {
-  const { context } = useMiniAppContext();
-  return (
-    // SafeAreaContainer component makes sure that the app margins are rendered properly depending on which client is being used.
-    <SafeAreaContainer insets={context?.client.safeAreaInsets}>
-      {/* You replace the Demo component with your home component */}
-      <Demo />
-    </SafeAreaContainer>
-  )
+```typescript
+interface User {
+  fid: number
+  username: string
+  displayName: string
+  wallet: string
+  verified: boolean
+  whale_score: number
+  followers: number
+  winrate_30d: number
+  pnl_30d: number
 }
 ```
 
-You can remove or edit the code in this file to build your Mini App.
+### Trade Interface
 
-### Accessing User Context
-
-<img width="1130" alt="5" src="https://github.com/user-attachments/assets/4448c141-d159-4538-abda-a175d02330a7" />
-
-
-Your Mini App receives various information about the user, including `username`, `fid`, `displayName`, `pfpUrl` and other fields.
-
-The template provides a helpful hook `useMiniAppContext` that you can use to access these fields:
-
-```js
-export function User() {
-    const { context } = useMiniAppContext();
-    return <p>{context.user.username}</p>
+```typescript
+interface Trade {
+  id: string
+  tokenIn: string
+  tokenOut: string
+  amountIn: number
+  amountOut: number
+  timestamp: Date
+  pnl: number
+  txHash: string
 }
 ```
 
-The template also provide an example of the same in `components/Home/User.tsx` file.
+## Customization
 
-You can learn more about Context [here](https://miniapps.farcaster.xyz/docs/sdk/context).
+### Theme Colors
 
-### Performing App Actions
+- Primary Dark: `#0B132B`
+- Accent Lime: `#C7F284`
+- Gray Scale: `#1A2332` to `#9AA4AA`
 
-![composeCast](https://docs.monad.xyz/img/guides/farcaster-miniapp/composeCast.gif)
+### Typography
 
-Mini Apps have the capability to perform native actions that enhance the user experience!
+- Font Family: Inter (Google Fonts)
+- Weights: 300, 400, 500, 600, 700
 
-Actions like:
+### Components
 
-- `addFrame`: Allows the user to save (bookmark) the app in a dedicated section
-- `composeCast`: Allows the MiniApp to prompt the user to cast with prefilled text and media
-- `viewProfile`: Presents a profile of a Farcaster user in a client native UI
+All components are located in `/components/WhaleCast/` and can be easily customized or extended.
 
-Learn more about Mini App actions [here](https://miniapps.farcaster.xyz/docs/sdk/actions/add-frame)
+## Integration Points
 
-The template provides an easy way to access the actions via the `useMiniAppContext` hook!
+- **Redis**: User data and trade signals storage
+- **Farcaster**: Social features and sharing
+- **Trading APIs**: Real-time trade execution (to be implemented)
+- **Notification Services**: Discord, Telegram integration (to be implemented)
 
-```js
-const { actions } = useMiniAppContext();
-```
+## Future Enhancements
 
-An example for the same can be found in `components/Home/FarcasterActions.tsx` file.
+- Real-time WebSocket connections for live updates
+- Advanced charting and analytics
+- Portfolio tracking and PnL visualization
+- Social features (comments, reactions, follows)
+- Mobile app (React Native)
+- Advanced filtering and search
+- AI-powered signal recommendations
 
-### Prompting Wallet Actions
+## License
 
-<img width="1130" alt="6" src="https://github.com/user-attachments/assets/7dc46f05-bcbb-43b4-a0e6-4f421648dfc6" />
-
-Every user of Warpcast has a Warpcast wallet with Monad Testnet support.
-
-**Mini Apps can prompt the user to perform onchain actions**!
-
-The template provides an example for the same in `components/Home/WalletActions.tsx` file.
-
-```js
-export function WalletActions() {
-    ...
-
-    async function sendTransactionHandler() {
-        sendTransaction({
-            to: "0x7f748f154B6D180D35fA12460C7E4C631e28A9d7",
-            value: parseEther("1"),
-        });
-    }
-
-    ...
-}
-```
-
-> [!WARNING]
-> The Warpcast wallet supports multiple networks. It is recommended that you ensure that the right network is connected before prompting wallet actions.
-
-You can use viem's `switchChain` or equivalent to prompt a chain switch.
-
-```js
-// Switching to Monad Testnet
-switchChain({ chainId: 10143 });
-```
-
-The template has an example for the same in the `components/Home/WalletActions.tsx` file.
-:::
-
-## Modifying the `farcaster.json` file
-
-When publishing the Mini App you will need to have a `farcaster.json` file that follows the specification.
-
-You can edit the `app/.well-known/farcaster.json/route.ts` file with your app details before publishing the app!
-
-```ts
-...
-
-const appUrl = process.env.NEXT_PUBLIC_URL;
-const farcasterConfig = {
-    // accountAssociation details are required to associated the published app with it's author
-    accountAssociation: {
-        "header": "",
-        "payload": "",
-        "signature": ""
-    },
-    frame: {
-        version: "1",
-        name: "Monad Farcaster MiniApp Template",
-        iconUrl: `${appUrl}/images/icon.png`, // Icon of the app in the app store
-        homeUrl: `${appUrl}`, // Default launch URL
-        imageUrl: `${appUrl}/images/feed.png`, // Default image to show if shared in a feed.
-        screenshotUrls: [], // Visual previews of the app
-        tags: ["monad", "farcaster", "miniapp", "template"], // Descriptive tags for search
-        primaryCategory: "developer-tools",
-        buttonTitle: "Launch Template",
-        splashImageUrl: `${appUrl}/images/splash.png`, // URL of image to show on loading screen.	
-        splashBackgroundColor: "#ffffff", // Hex color code to use on loading screen.
-    }
-};
-
-...
-```
-
-You can learn more about publishing the Mini App and other manifest properties [here](https://miniapps.farcaster.xyz/docs/guides/publishing).
-
-## Conclusion
-
-In this guide, you explored Farcaster Mini Apps — the simplest way to create engaging, high-retention, and easily monetizable applications!
-
-You also discovered the key capabilities of Mini Apps and how you can use the [Monad Farcaster MiniApp Template](https://github.com/monad-developers/monad-miniapp-template) to build your own.
-
-For more details, check out the official Mini App documentation [here](https://miniapps.farcaster.xyz/).
+MIT License - see LICENSE file for details.

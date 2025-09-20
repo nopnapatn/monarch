@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "redis": {
+      "command": "pnpm",
+      "args": [
+        "@upstash/mcp-redis"
+      ],
+      "env": {
+        "UPSTASH_REDIS_REST_URL": "https://skilled-seahorse-6725.upstash.io",
+        "UPSTASH_REDIS_REST_TOKEN": "ARpFAAImcDJmYTIzZTIzYTg1NDA0OTdkYmQ3MzEwNTgzZTI1OWNlNHAyNjcyNQ"
+      }
+    }
+  }
+}
