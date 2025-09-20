@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { getUser } from "../../lib/kv"
 import { User } from "../../types"
 import { CopyTradeModal } from "./CopyTradeModal"
+import { useDemoMode } from "./DemoMode"
 import { UserProfile } from "./UserProfile"
 
 interface Trade {
@@ -33,6 +34,7 @@ export function SignalDetailsPage({
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { demoUser } = useDemoMode()
 
   // Mock trade data
   const mockTrade: Trade = {
@@ -84,16 +86,23 @@ export function SignalDetailsPage({
     const loadUser = async () => {
       try {
         const userData = await getUser(userId)
-        setUser(userData)
+        if (userData) {
+          setUser(userData)
+        } else {
+          // Use demo user if not found in Redis
+          setUser(demoUser(userId))
+        }
       } catch (error) {
-        console.error("Failed to load user:", error)
+        console.error("Failed to load user from Redis, using demo user:", error)
+        // Use demo user on error
+        setUser(demoUser(userId))
       } finally {
         setIsLoading(false)
       }
     }
 
     loadUser()
-  }, [userId])
+  }, [userId, demoUser])
 
   const handleCopyTrade = () => {
     setIsModalOpen(true)

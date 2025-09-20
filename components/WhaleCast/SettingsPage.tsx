@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { getAllUsers } from "../../lib/kv"
 import { User } from "../../types"
+import { useDemoMode } from "./DemoMode"
 
 interface SettingsPageProps {
   onBack: () => void
@@ -11,6 +12,7 @@ interface SettingsPageProps {
 export function SettingsPage({ onBack }: SettingsPageProps) {
   const [users, setUsers] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const { demoUsers } = useDemoMode()
 
   // Filter settings
   const [minNotional, setMinNotional] = useState(100)
@@ -29,18 +31,28 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
     const loadUsers = async () => {
       try {
         const userData = await getAllUsers()
-        setUsers(userData)
+        if (userData && userData.length > 0) {
+          setUsers(userData)
+        } else {
+          // Use demo users if no data found in Redis
+          setUsers(demoUsers)
+        }
         // Mock some followed users
         setFollowedUsers(new Set([201, 203, 205]))
       } catch (error) {
-        console.error("Failed to load users:", error)
+        console.error(
+          "Failed to load users from Redis, using demo data:",
+          error
+        )
+        // Use demo users on error
+        setUsers(demoUsers)
       } finally {
         setIsLoading(false)
       }
     }
 
     loadUsers()
-  }, [])
+  }, [demoUsers])
 
   const handleToggleFollow = (userId: number) => {
     const newFollowed = new Set(followedUsers)

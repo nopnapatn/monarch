@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { User } from "../../types"
+import { ErrorBoundary } from "./ErrorBoundary"
 import { FeedPage } from "./FeedPage"
 import { SettingsPage } from "./SettingsPage"
 import { ShareAlphaCard } from "./ShareAlphaCard"
@@ -98,19 +99,21 @@ export function WhaleCastApp({ initialPage = "feed" }: WhaleCastAppProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      {renderCurrentPage()}
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gray-900">
+        {renderCurrentPage()}
 
-      {/* Share Alpha Card Modal */}
-      {shareUser && shareTrade && (
-        <ShareAlphaCard
-          isOpen={isShareModalOpen}
-          onClose={() => setIsShareModalOpen(false)}
-          user={shareUser}
-          trade={shareTrade}
-          onShareToFarcaster={handleShareToFarcaster}
-        />
-      )}
-    </div>
+        {/* Share Alpha Card Modal */}
+        {shareUser && shareTrade && (
+          <ShareAlphaCard
+            isOpen={isShareModalOpen}
+            onClose={() => setIsShareModalOpen(false)}
+            user={shareUser}
+            trade={shareTrade}
+            onShareToFarcaster={handleShareToFarcaster}
+          />
+        )}
+      </div>
+    </ErrorBoundary>
   )
 }
