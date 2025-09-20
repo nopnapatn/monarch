@@ -10,11 +10,11 @@ import { SignalDetailsPage } from "./SignalDetailsPage"
 
 type AppPage = "feed" | "details" | "settings"
 
-interface WhaleCastAppProps {
+interface ManorchAppProps {
   initialPage?: AppPage
 }
 
-export function WhaleCastApp({ initialPage = "feed" }: WhaleCastAppProps) {
+export function ManorchApp({ initialPage = "feed" }: ManorchAppProps) {
   const [currentPage, setCurrentPage] = useState<AppPage>(initialPage)
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null)
   const [selectedTradeId, setSelectedTradeId] = useState<string | null>(null)

@@ -73,7 +73,7 @@ a {
   background: var(--whale-gray-500);
 }
 
-/* WhaleCast specific styles */
+/* Manorch specific styles */
 .whale-card {
   @apply bg-gray-100 rounded-2xl p-4 shadow-lg border border-gray-200;
   background: linear-gradient(

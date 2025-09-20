@@ -146,7 +146,7 @@ interface Trade {
 
 ### Components
 
-All components are located in `/components/WhaleCast/` and can be easily customized or extended.
+All components are located in `/components/Manorch/` and can be easily customized or extended.
 
 ## Integration Points
 

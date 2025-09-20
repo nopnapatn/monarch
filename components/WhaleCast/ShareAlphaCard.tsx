@@ -118,7 +118,7 @@ export function ShareAlphaCard({
                 <div className="text-sm text-gray-400">
                   {formatTimeAgo(trade.timestamp)}
                 </div>
-                <div className="text-xs text-gray-500">via WhaleCast</div>
+                <div className="text-xs text-gray-500">via Manorch</div>
               </div>
             </div>
 
@@ -166,7 +166,7 @@ export function ShareAlphaCard({
                   Follow the smart money 🐋
                 </div>
                 <div className="text-xs text-gray-500">
-                  #WhaleCast #TradingSignals
+                  #Manorch #TradingSignals
                 </div>
               </div>
             </div>

@@ -171,7 +171,7 @@ export function FeedPage({ onViewDetails, onOpenSettings }: FeedPageProps) {
           <div className="max-w-2xl mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-white">🐋 WhaleCast</h1>
+                <h1 className="text-2xl font-bold text-white">🐋 Manorch</h1>
                 <p className="text-sm text-gray-400">Follow the smart money</p>
               </div>
               <div className="flex items-center space-x-2">
@@ -209,7 +209,7 @@ export function FeedPage({ onViewDetails, onOpenSettings }: FeedPageProps) {
         <div className="max-w-2xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-white">🐋 WhaleCast</h1>
+              <h1 className="text-2xl font-bold text-white">🐋 Manorch</h1>
               <p className="text-sm text-gray-400">Follow the smart money</p>
             </div>
             <div className="flex items-center space-x-2">

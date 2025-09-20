@@ -23,7 +23,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: any) {
-    console.error("WhaleCast Error Boundary caught an error:", error, errorInfo)
+    console.error("Manorch Error Boundary caught an error:", error, errorInfo)
   }
 
   render() {
@@ -37,7 +37,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 Oops! Something went wrong
               </h2>
               <p className="text-gray-400 mb-6">
-                We encountered an error while loading WhaleCast. Please try
+                We encountered an error while loading Manorch. Please try
                 refreshing the page.
               </p>
               <button
